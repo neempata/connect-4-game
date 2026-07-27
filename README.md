@@ -1,115 +1,211 @@
-# Connect 4 Game
+# T-Rex Runner Game
 
-A two-player Connect 4 game built with Python, Pygame, and NumPy. The game has a simple graphical interface, live piece previews, alternating player turns, and automatic win detection.
+A simple endless runner game built with Python and Pygame. The player controls a T-Rex that must jump over randomly generated obstacles while the game gradually becomes faster and more challenging.
+
+This project recreates the basic gameplay of the classic browser dinosaur game while using a custom purple, pink, and black color theme. It focuses on game loops, object-oriented programming, collision detection, gravity, keyboard controls, and real-time movement.
+
+## Project Overview
+
+The goal of the game is to keep the T-Rex alive for as long as possible. Obstacles move from the right side of the screen toward the player, and the T-Rex must jump over them before they collide.
+
+The game keeps track of survival time instead of using a traditional point system. As time passes, the obstacle speed slowly increases, making each run more difficult than the last.
+
+When a collision occurs, the game ends and the player can press the spacebar to immediately restart.
 
 ## Features
 
-- Classic 6-row by 7-column Connect 4 board
-- Local two-player gameplay
-- Interactive mouse controls
-- Live preview showing where the next piece will be placed
-- Automatic horizontal, vertical, and diagonal win detection
-- Color-coded players:
-  - Player 1 uses purple pieces
-  - Player 2 uses pink pieces
-- Console output showing the board after every move
+- Endless side-scrolling gameplay
+- Spacebar-controlled jumping
+- Gravity-based jump movement
+- Random obstacle heights and spacing
+- Gradually increasing game speed
+- Rectangle-based collision detection
+- Survival timer displayed on screen
+- Instant restart after game over
+- Custom purple, light pink, and black color palette
+- Object-oriented structure using separate T-Rex and obstacle classes
+- Smooth gameplay running at 60 frames per second
+
+## Technologies Used
+
+- Python
+- Pygame
+- Python `random` module
+- Object-oriented programming
+
+## How the Game Works
+
+### 1. Game Window
+
+Pygame creates an `800 × 200` game window. A horizontal line near the bottom of the screen represents the ground.
+
+The game uses three main colors:
+
+- Black for the background
+- Purple for the T-Rex
+- Light pink for the ground, obstacles, timer, and game-over message
+
+### 2. T-Rex Movement
+
+The T-Rex stays near the left side of the screen while the obstacles move toward it.
+
+When the player presses the spacebar, a negative vertical velocity moves the T-Rex upward. Gravity is added during every frame, gradually pulling it back toward the ground.
+
+The T-Rex can only jump while it is standing on the ground. This prevents the player from jumping repeatedly in midair.
+
+### 3. Obstacle Generation
+
+Obstacles are created on the right side of the screen with randomized heights. Their spacing is also randomized so that each run feels slightly different.
+
+Every obstacle moves from right to left. Once an obstacle leaves the screen, it is removed from the obstacle list.
+
+### 4. Increasing Difficulty
+
+The game starts at a manageable speed. During every frame, the speed increases by a small amount.
+
+This creates a gradual difficulty curve: the longer the player survives, the faster the obstacles approach.
+
+### 5. Collision Detection
+
+Both the T-Rex and the obstacles are represented by Pygame rectangles. The game checks whether the T-Rex rectangle overlaps any obstacle rectangle.
+
+If an overlap is detected, the game enters its game-over state and stops updating the movement.
+
+### 6. Timer and Restart
+
+The timer records how many seconds the player survives and displays the result in the upper-left corner of the window.
+
+After a collision, the screen displays:
+
+```text
+Game Over! Press SPACE to Restart
+```
+
+Pressing the spacebar resets the T-Rex, obstacles, speed, and timer so a new run can begin without closing the game.
+
+## Controls
+
+| Key | Action |
+| --- | --- |
+| `Space` | Jump |
+| `Space` after game over | Restart the game |
+| Close window | Quit the game |
 
 ## Requirements
 
-- Python 3
+- Python 3.x
 - Pygame
-- NumPy
 
 ## Installation
 
-1. Clone or download this repository.
+Clone or download the project, then open a terminal inside the project folder.
 
-2. Open a terminal in the project folder.
+Install Pygame:
 
-3. Install the required packages:
-
-```bash
-python -m pip install pygame numpy
+```powershell
+python -m pip install pygame
 ```
 
-## Usage
+## Running the Game
 
-Run the game with:
+Run the Python file:
 
-```bash
-python connect4.py
+```powershell
+python t_rex.py
 ```
 
-A new game window will open automatically.
-
-## How to Play
-
-1. Player 1 starts with the purple pieces.
-2. Move the mouse across the top of the window to preview the current player's piece.
-3. Click a column to drop the piece into the lowest available position.
-4. Players continue taking turns.
-5. The first player to connect four pieces horizontally, vertically, or diagonally wins.
-
-If a column is full, clicking it will not place a piece.
-
-## How It Works
-
-### Board Setup
-
-The game board is stored as a NumPy array with 6 rows and 7 columns. Empty spaces are represented by `0`, Player 1 pieces by `1`, and Player 2 pieces by `2`.
-
-### Piece Placement
-
-When a player clicks a column, the game checks whether that column has an open space. The piece is then placed in the lowest available row.
-
-### Win Detection
-
-After every valid move, the game checks for four matching pieces in:
-
-- Horizontal lines
-- Vertical lines
-- Positively sloped diagonals
-- Negatively sloped diagonals
-
-### Game Display
-
-Pygame handles the game window, mouse input, board drawing, piece colors, and title text. NumPy manages the board data and makes it easy to track each position.
+The game window will open immediately. Press the spacebar to jump over the incoming obstacles.
 
 ## Project Structure
 
 ```text
-.
-|-- connect4.py
-`-- README.md
+for-github/
+├── t_rex.py     Main game file
+├── README.md    Project documentation
+└── .gitignore   Files and folders excluded from Git
 ```
 
-## Possible Improvements
+## Game Loop
 
-- Add a restart button
-- Detect when the board is full and declare a draw
-- Add a computer-controlled opponent
-- Include a score tracker
-- Add sound effects and animations
-- Let players choose their colors
+The main game loop follows this process:
 
-## Troubleshooting
-
-### Pygame or NumPy is not installed
-
-Install both packages with:
-
-```bash
-python -m pip install pygame numpy
+```text
+Start Game
+    |
+    v
+Read Keyboard and Window Events
+    |
+    v
+Update Timer and Game Speed
+    |
+    v
+Apply Jumping and Gravity
+    |
+    v
+Generate and Move Obstacles
+    |
+    v
+Check for Collisions
+    |
+    v
+Draw the Game
+    |
+    v
+Repeat at 60 FPS
 ```
 
-### The game window does not open
+## What I Learned
 
-Make sure you are running the script in a desktop environment that supports graphical windows.
+This project strengthened my understanding of how real-time games are structured around a continuous game loop. Instead of waiting for a user to enter a command, the program constantly reads events, updates positions, checks for collisions, and redraws the screen.
 
-### A full column does not accept a piece
+I learned how velocity and gravity can be used together to create a natural jumping effect. Giving the T-Rex an upward velocity begins the jump, while adding gravity during every frame brings it back down. The ground check also showed me how to stop an object at a fixed boundary and prevent double jumping.
 
-This is expected. Choose another column that still has an empty space.
+Creating separate `TRex` and `Obstacle` classes helped me understand how object-oriented programming can keep game code organized. Each object manages its own position, movement, appearance, and state while the main loop controls how everything works together.
 
-## About
+I also gained more experience with rectangle collision detection, random obstacle generation, frame-rate control, and game-state management. Resetting the game after a collision showed me how multiple variables and objects must return to their starting values at the same time.
 
-This project is a simple demonstration of game logic, event handling, array-based board management, and graphical programming with Python.
+Finally, this project demonstrated how small changes can shape the player experience. Random obstacle sizes make each run less predictable, and gradually increasing the speed creates difficulty without needing multiple levels.
+
+## Future Improvements
+
+Some improvements I would like to explore include:
+
+- Replace the rectangles with animated T-Rex and cactus sprites
+- Add a high-score system
+- Save the best survival time between sessions
+- Add sound effects for jumping, scoring, and collisions
+- Include clouds, stars, or moving background layers
+- Add a start screen and pause option
+- Introduce different obstacle types
+- Allow the T-Rex to duck under flying obstacles
+- Improve obstacle spacing at higher speeds
+- Add difficulty modes
+- Display a score based on distance traveled
+- Add pixel-style fonts and visual effects
+- Package the game as a standalone executable
+
+## Possible Challenges
+
+### Pygame is not installed
+
+If the program displays `ModuleNotFoundError: No module named 'pygame'`, install the dependency:
+
+```powershell
+python -m pip install pygame
+```
+
+### The game closes immediately
+
+Run the project from a terminal so any error message remains visible:
+
+```powershell
+python t_rex.py
+```
+
+### The T-Rex does not jump
+
+Click the game window to make sure it has keyboard focus, then press the spacebar.
+
+## License
+
+This project is open source and available for learning, practice, and modification.
