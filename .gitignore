@@ -34,7 +34,6 @@ htmlcov/
 .tox/
 .nox/
 .coverage
-.coverage.*
 .cache
 .pytest_cache/
 
@@ -46,7 +45,6 @@ htmlcov/
 
 # IDE / editor directories
 .vscode/
-*.sublime-project
 *.sublime-workspace
 
 # OS files
