@@ -46,7 +46,6 @@ htmlcov/
 
 # IDE / editor directories
 .vscode/
-.idea/
 *.sublime-project
 *.sublime-workspace
 
